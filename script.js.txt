@@ -1,0 +1,33 @@
+document.getElementById("study-improvement-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // جمع البيانات من النموذج
+    const formData = new FormData(event.target);
+    const studyMethod = formData.getAll("study_method");
+    const activeHours = formData.get("active_hours");
+    const studyPreference = formData.get("study_preference");
+    const focusDuration = parseInt(formData.get("focus_duration"), 10);
+    const timeTools = formData.getAll("time_tools");
+    const course = formData.get("courses");
+    const grade = parseInt(formData.get("grade"), 10);
+    const gpa = parseFloat(formData.get("gpa"));
+    const currentStudyMethod = formData.get("current_study_method");
+
+    // تحليل البيانات لتحديد طريقة الدراسة المثلى
+    let recommendedMethod = "غير محدد";
+
+    if (studyPreference === "في مجموعة" && timeTools.length > 0) {
+        recommendedMethod = "الدراسة الجماعية";
+    } else if (studyPreference === "منفرداً" && focusDuration > 30) {
+        recommendedMethod = "تقنية الطماطم";
+    } else if (studyMethod.includes("الكتابة والقراءة") && grade >= 85) {
+        recommendedMethod = "المراجعة النشطة";
+    } else if (timeTools.length === 0 && gpa < 2.5) {
+        recommendedMethod = "التعليم الذاتي";
+    } else {
+        recommendedMethod = "الممارسة المتقطعة"; // طريقة افتراضية
+    }
+
+    // عرض النتيجة
+    alert(`تم إرسال إجاباتك بنجاح! الطريقة المثلى لدراستك هي: ${recommendedMethod}`);
+});
