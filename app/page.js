@@ -49,11 +49,11 @@ export default function Page() {
             <form id="study-improvement-form" onSubmit={handleSubmit}>
                 <div className="question">
                     <label>1- كيف درست مواد الفهم؟</label><br />
-                    <input type="checkbox" name="study_method" value="مشاهدة فيديو" /> مشاهدة فيديو<br />
-                    <input type="checkbox" name="study_method" value="الكتابة والقراءة" /> الكتابة والقراءة<br />
-                    <input type="checkbox" name="study_method" value="القراءة" /> القراءة<br />
-                    <input type="checkbox" name="study_method" value="الكتابة" /> الكتابة<br />
-                    <input type="checkbox" name="study_method" value="الدراسة الجماعية" /> الدراسة الجماعية<br />
+                    <input type="radio" name="study_method" value="مشاهدة فيديو" /> مشاهدة فيديو<br />
+                    <input type="radio" name="study_method" value="الكتابة والقراءة" /> الكتابة والقراءة<br />
+                    <input type="radio" name="study_method" value="القراءة" /> القراءة<br />
+                    <input type="radio" name="study_method" value="الكتابة" /> الكتابة<br />
+                    <input type="radio" name="study_method" value="الدراسة الجماعية" /> الدراسة الجماعية<br />
                 </div>
                 <div className="question">
                     <label>2- متى تكون أكثر نشاطًا؟</label><br />
@@ -75,10 +75,10 @@ export default function Page() {
                 </div>
                 <div className="question">
                     <label>5- ما هي الأدوات التي تستخدمها لإدارة وقتك؟</label><br />
-                    <input type="checkbox" name="time_tools" value="تقاويم رقمية" /> تقاويم رقمية<br />
-                    <input type="checkbox" name="time_tools" value="تطبيقات إدارة المهام" /> تطبيقات إدارة المهام<br />
-                    <input type="checkbox" name="time_tools" value="جداول زمنية ورقية" /> جداول زمنية ورقية<br />
-                    <input type="checkbox" name="time_tools" value="لا أستخدم أي أدوات" /> لا أستخدم أي أدوات<br />
+                    <input type="radio" name="time_tools" value="تقاويم رقمية" /> تقاويم رقمية<br />
+                    <input type="radio" name="time_tools" value="تطبيقات إدارة المهام" /> تطبيقات إدارة المهام<br />
+                    <input type="radio" name="time_tools" value="جداول زمنية ورقية" /> جداول زمنية ورقية<br />
+                    <input type="radio" name="time_tools" value="لا أستخدم أي أدوات" /> لا أستخدم أي أدوات<br />
                 </div>
                 <div className="question">
                     <label>6- المواد التي درستها:</label><br />
