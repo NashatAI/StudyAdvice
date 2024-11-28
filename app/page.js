@@ -13,7 +13,12 @@ export default function Page() {
                 </div>
                 <div className="question">
                     <label>2- متى تكون أكثر نشاطًا؟</label><br />
-                    <input type="text" name="active_hours" placeholder="مثال: 9 صباحاً - 12 ظهراً" />
+                    <input type="radio" name="active_hours" value="4:00AM - 8:00AM" /> 4:00AM - 8:00AM<br />
+                    <input type="radio" name="active_hours" value="8:00AM - 12:00PM" /> 8:00AM - 12:00PM<br />
+                    <input type="radio" name="active_hours" value="12:00PM - 2:00PM" /> 12:00PM - 2:00PM<br />
+                    <input type="radio" name="active_hours" value="6:00PM - 10:00PM" /> 6:00PM - 10:00PM<br />
+                    <input type="radio" name="active_hours" value="10:00PM - 12:00AM" /> 10:00PM - 12:00AM<br />
+                    <input type="radio" name="active_hours" value="12:00AM - 4:00AM" /> 12:00AM - 4:00AM<br />
                 </div>
                 <div className="question">
                     <label>3- كيف تفضل أن تدرس؟</label><br />
@@ -51,7 +56,7 @@ export default function Page() {
                 </div>
                 <div className="question">
                     <label>9- طريقة دراستك الحالية:</label><br />
-                    <select name="current_study_method">
+                    <select name="current_study_method" target="value">
                         <option value="تقنية الطماطم">تقنية الطماطم</option>
                         <option value="المراجعة النشطة">المراجعة النشطة</option>
                         <option value="الممارسة المتقطعة">الممارسة المتقطعة</option>
