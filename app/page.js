@@ -1,93 +1,213 @@
-'use client';
-import { useState } from "react";
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export default function Page() {
-    const [suggestedMethod, setSuggestedMethod] = useState("");
-    const [selectedCourses, setSelectedCourses] = useState([]);
+const StudyMethodRecommender = () => {
+  const [answers, setAnswers] = useState({});
+  const [recommendedMethod, setRecommendedMethod] = useState(null);
 
-    const getStudyAdvice = (studyMethod) => {
-        if (studyMethod === "تقنية الطماطم") {
-            return "تقنية الطماطم رائعة لتحسين التركيز. ولكن إذا كنت بحاجة إلى تحسين الذاكرة، يمكنك تجربة المراجعة النشطة.";
-        }
-        // (إضافة نصائح أخرى كما في المثال السابق)
-        return "لا يوجد طريقة دراسية واحدة صحيحة. جرب دمج عدة طرق للحصول على أفضل النتائج.";
-    };
+  const surveyQuestions = [
+    {
+      id: 1,
+      text: "كيف درست مواد الفهم؟",
+      type: "select",
+      options: ["مشاهدة فيديو", "القراءة", "الكتابة", "الكتابة والقراءة"]
+    },
+    {
+      id: 2,
+      text: "متى تكون أكثر نشاطًا؟",
+      type: "select",
+      options: ["8:00 - 12:00", "12:00 - 4:00", "6:00 - 10:00", "10:00 - 12:00"]
+    },
+    {
+      id: 3,
+      text: "كيف تفضل أن تدرس؟",
+      type: "select",
+      options: ["منفردًا", "في مجموعة"]
+    },
+    {
+      id: 4,
+      text: "كم دقيقة تستطيع البقاء محافظًا على تركيزك أثناء الدراسة؟",
+      type: "number",
+      placeholder: "أدخل عدد الدقائق"
+    },
+    {
+      id: 5,
+      text: "ما هي الأدوات التي تستخدمها لإدارة وقتك؟",
+      type: "select",
+      options: ["نعم", "لا"]
+    },
+    {
+      id: 6,
+      text: "ما هي المواد التي درستها؟",
+      type: "select",
+      options: ["نظم معلومات حاسوبية (CIS 120)", "إحصاء (STAT 101)", "مواد أخرى"]
+    },
+    {
+      id: 7,
+      text: "ما هي العلامة التي حصلت عليها في مقدمة نظم المعلومات؟",
+      type: "select",
+      options: ["80-89", "90-100"]
+    },
+    {
+      id: 8,
+      text: "ما هو معدلك الحالي؟",
+      type: "number",
+      placeholder: "أدخل معدلك"
+    }
+  ];
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const form = event.target;
-        const studyMethod = form.elements["current_study_method"].value;
+  const studyMethods = {
+    "التعليم الذاتي": {
+      score: 0,
+      description: "طريقة دراسة مستقلة تعتمد على التعلم الفردي والتنظيم الذاتي.",
+      tips: [
+        "وضع جدول زمني منظم",
+        "تحديد أهداف واضحة",
+        "استخدام مصادر متنوعة للتعلم"
+      ]
+    },
+    "الممارسة المتقطعة": {
+      score: 0,
+      description: "دراسة متقطعة مع فترات راحة بين جلسات الدراسة.",
+      tips: [
+        "تقسيم وقت الدراسة لفترات قصيرة",
+        "أخذ استراحات منتظمة",
+        "تحديد أهداف لكل جلسة دراسية"
+      ]
+    },
+    "تقنية البومودورو": {
+      score: 0,
+      description: "طريقة دراسة تعتمد على فترات دراسة محددة مع استراحات قصيرة.",
+      tips: [
+        "العمل لمدة 25 دقيقة ثم أخذ استراحة 5 دقائق",
+        "استخدام مؤقت لتنظيم الوقت",
+        "تتبع التقدم في الدراسة"
+      ]
+    },
+    "تدوين الملاحظات النشطة": {
+      score: 0,
+      description: "طريقة دراسة تعتمد على التلخيص والكتابة النشطة.",
+      tips: [
+        "تدوين النقاط الرئيسية أثناء الدراسة",
+        "استخدام الألوان والرسومات التوضيحية",
+        "مراجعة الملاحظات بشكل منتظم"
+      ]
+    }
+  };
 
-        const advice = getStudyAdvice(studyMethod);
-        setSuggestedMethod(advice);
-    };
+  const handleAnswerChange = (questionId, value) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
+  };
 
-    const handleCourseSelection = (event) => {
-        const selectedOptions = Array.from(event.target.selectedOptions).map((option) => option.value);
-        setSelectedCourses(selectedOptions);
-    };
+  const analyzeStudyMethod = () => {
+    // إعادة تعيين النقاط
+    Object.keys(studyMethods).forEach(method => {
+      studyMethods[method].score = 0;
+    });
 
-    return (
-        <div className="container">
-            <h1>مشروع تحسين الأداء الدراسي</h1>
-            <form id="study-improvement-form" onSubmit={handleSubmit}>
-                <div className="question">
-                    <label>6- المواد التي درستها:</label><br />
-                    <select name="courses" multiple onChange={handleCourseSelection}>
-                        <option value="CIS 120">نظم معلومات حاسوبية (CIS 120)</option>
-                        <option value="STAT 101">إحصاء (STAT 101)</option>
-                        <option value="CS 111">برمجة بلغة مختارة (CS 111)</option>
-                        <option value="DA 350">تعلم آلي (DA 350)</option>
-                        <option value="MATH 101">تفاضل وتكامل (MATH 101)</option>
-                    </select>
-                </div>
+    // تحليل الإجابات وتعيين النقاط
+    if (answers[1] === "الكتابة والقراءة") {
+      studyMethods["تدوين الملاحظات النشطة"].score += 2;
+    }
 
-                {selectedCourses.map((course, index) => (
-                    <div className="question" key={index}>
-                        <label>ما هي العلامة التي حصلت عليها في {course}؟</label><br />
-                        <input type="number" name={`grade_${course}`} placeholder="أدخل العلامة من 100" min="0" max="100" />
-                    </div>
-                ))}
+    if (answers[2] === "8:00 - 12:00") {
+      studyMethods["التعليم الذاتي"].score += 1;
+      studyMethods["تقنية البومودورو"].score += 1;
+    }
 
-                <div className="question">
-                    <label>8- معدلك الحالي:</label><br />
-                    <input 
-                        type="number" 
-                        name="gpa" 
-                        placeholder="أدخل النسبة المئوية" 
-                        min="0" 
-                        max="100" 
-                        step="0.01" 
-                        style={{ width: "200px" }} 
-                    /> %
-                </div>
+    if (answers[3] === "منفردًا") {
+      studyMethods["التعليم الذاتي"].score += 2;
+    }
 
-                <div className="question">
-                    <label>9- طريقة دراستك الحالية:</label><br />
-                    <select name="current_study_method">
-                        <option value="تقنية الطماطم">تقنية الطماطم</option>
-                        <option value="المراجعة النشطة">المراجعة النشطة</option>
-                        <option value="الممارسة المتقطعة">الممارسة المتقطعة</option>
-                        <option value="تدوين الملاحظات النشطة">تدوين الملاحظات النشطة</option>
-                        <option value="خريطة المفاهيم">خريطة المفاهيم</option>
-                        <option value="الدراسة الجماعية">الدراسة الجماعية</option>
-                        <option value="التعليم الذاتي">التعليم الذاتي</option>
-                        <option value="التعلم عن طريق الأمثلة">التعلم عن طريق الأمثلة</option>
-                        <option value="التصور العقلي">التصور العقلي</option>
-                        <option value="تقسيم المهام">تقسيم المهام</option>
-                    </select>
-                </div>
+    if (Number(answers[4]) > 45) {
+      studyMethods["تقنية البومودورو"].score += 2;
+    }
 
-                <button type="submit">إرسال</button>
-            </form>
+    if (answers[5] === "نعم") {
+      studyMethods["الممارسة المتقطعة"].score += 1;
+    }
 
-            {suggestedMethod && (
-                <div className="suggestion">
-                    <h2>نصيحة الدراسة:</h2>
-                    <p>{suggestedMethod}</p>
-                </div>
-            )}
-        </div>
+    if (answers[7] === "90-100") {
+      studyMethods["التعليم الذاتي"].score += 2;
+    }
+
+    if (Number(answers[8]) > 85) {
+      studyMethods["التعليم الذاتي"].score += 2;
+    }
+
+    // اختيار أفضل طريقة
+    const bestMethod = Object.keys(studyMethods).reduce((a, b) => 
+      studyMethods[a].score > studyMethods[b].score ? a : b
     );
-}
 
+    setRecommendedMethod(bestMethod);
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>اختيار أفضل طريقة دراسة</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {surveyQuestions.map(question => (
+            <div key={question.id} className="mb-4">
+              <p className="mb-2 font-bold">{question.text}</p>
+              {question.type === "select" && (
+                <Select onValueChange={(value) => handleAnswerChange(question.id, value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="اختر" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {question.options.map(option => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+              {question.type === "number" && (
+                <Input 
+                  type="number" 
+                  placeholder={question.placeholder}
+                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                />
+              )}
+            </div>
+          ))}
+          
+          <Button 
+            onClick={analyzeStudyMethod} 
+            className="w-full mt-4"
+          >
+            تحليل طريقة الدراسة
+          </Button>
+
+          {recommendedMethod && (
+            <div className="mt-4 p-3 bg-gray-100 rounded">
+              <h3 className="font-bold mb-2">الطريقة المناسبة لك:</h3>
+              <p>{recommendedMethod}</p>
+              <p className="mt-2">{studyMethods[recommendedMethod].description}</p>
+              
+              <h4 className="font-semibold mt-2">نصائح:</h4>
+              <ul className="list-disc pr-5">
+                {studyMethods[recommendedMethod].tips.map((tip, index) => (
+                  <li key={index}>{tip}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default StudyMethodRecommender;
