@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> dc5fa0092a858e1577bd9ab8de80daac10f18043
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
