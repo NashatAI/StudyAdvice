@@ -1,213 +1,165 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطوير الأداء الدراسي</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-left: 10px;
+        }
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .question {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>تطوير الأداء الدراسي</h1>
+    <form action="#" method="post">
+        <label class="question" for="comprehension">1. كيف درست مواد الفهم؟</label><br>
+        <input type="radio" id="video" name="comprehension" value="مشاهدة فيديو">
+        <label for="video">مشاهدة فيديو</label><br>
+        <input type="radio" id="reading" name="comprehension" value="القراءة">
+        <label for="reading">القراءة</label><br>
+        <input type="radio" id="writing" name="comprehension" value="الكتابة">
+        <label for="writing">الكتابة</label><br>
+        <input type="radio" id="writing-reading" name="comprehension" value="الكتابة والقراءة">
+        <label for="writing-reading">الكتابة والقراءة</label><br><br>
 
-const StudyMethodRecommender = () => {
-  const [answers, setAnswers] = useState({});
-  const [recommendedMethod, setRecommendedMethod] = useState(null);
+        <label class="question" for="activity-time">2. متى تكون أكثر نشاطًا؟</label><br>
+        <input type="checkbox" id="morning1" name="activity-time" value="8:00 AM - 12:00 PM">
+        <label for="morning1">8:00 AM - 12:00 PM</label><br>
+        <input type="checkbox" id="afternoon" name="activity-time" value="12:00 PM - 4:00 PM">
+        <label for="afternoon">12:00 PM - 4:00 PM</label><br>
+        <input type="checkbox" id="evening" name="activity-time" value="6:00 PM - 10:00 PM">
+        <label for="evening">6:00 PM - 10:00 PM</label><br>
+        <input type="checkbox" id="night" name="activity-time" value="10:00 PM - 12:00 AM">
+        <label for="night">10:00 PM - 12:00 AM</label><br><br>
 
-  const surveyQuestions = [
-    {
-      id: 1,
-      text: "كيف درست مواد الفهم؟",
-      type: "select",
-      options: ["مشاهدة فيديو", "القراءة", "الكتابة", "الكتابة والقراءة"]
-    },
-    {
-      id: 2,
-      text: "متى تكون أكثر نشاطًا؟",
-      type: "select",
-      options: ["8:00 - 12:00", "12:00 - 4:00", "6:00 - 10:00", "10:00 - 12:00"]
-    },
-    {
-      id: 3,
-      text: "كيف تفضل أن تدرس؟",
-      type: "select",
-      options: ["منفردًا", "في مجموعة"]
-    },
-    {
-      id: 4,
-      text: "كم دقيقة تستطيع البقاء محافظًا على تركيزك أثناء الدراسة؟",
-      type: "number",
-      placeholder: "أدخل عدد الدقائق"
-    },
-    {
-      id: 5,
-      text: "ما هي الأدوات التي تستخدمها لإدارة وقتك؟",
-      type: "select",
-      options: ["نعم", "لا"]
-    },
-    {
-      id: 6,
-      text: "ما هي المواد التي درستها؟",
-      type: "select",
-      options: ["نظم معلومات حاسوبية (CIS 120)", "إحصاء (STAT 101)", "مواد أخرى"]
-    },
-    {
-      id: 7,
-      text: "ما هي العلامة التي حصلت عليها في مقدمة نظم المعلومات؟",
-      type: "select",
-      options: ["80-89", "90-100"]
-    },
-    {
-      id: 8,
-      text: "ما هو معدلك الحالي؟",
-      type: "number",
-      placeholder: "أدخل معدلك"
-    }
-  ];
+        <label class="question" for="study-preference">3. كيف تفضل أن تدرس؟</label><br>
+        <input type="radio" id="alone" name="study-preference" value="منفردًا">
+        <label for="alone">منفردًا</label><br>
+        <input type="radio" id="group" name="study-preference" value="في مجموعة">
+        <label for="group">في مجموعة</label><br><br>
 
-  const studyMethods = {
-    "التعليم الذاتي": {
-      score: 0,
-      description: "طريقة دراسة مستقلة تعتمد على التعلم الفردي والتنظيم الذاتي.",
-      tips: [
-        "وضع جدول زمني منظم",
-        "تحديد أهداف واضحة",
-        "استخدام مصادر متنوعة للتعلم"
-      ]
-    },
-    "الممارسة المتقطعة": {
-      score: 0,
-      description: "دراسة متقطعة مع فترات راحة بين جلسات الدراسة.",
-      tips: [
-        "تقسيم وقت الدراسة لفترات قصيرة",
-        "أخذ استراحات منتظمة",
-        "تحديد أهداف لكل جلسة دراسية"
-      ]
-    },
-    "تقنية البومودورو": {
-      score: 0,
-      description: "طريقة دراسة تعتمد على فترات دراسة محددة مع استراحات قصيرة.",
-      tips: [
-        "العمل لمدة 25 دقيقة ثم أخذ استراحة 5 دقائق",
-        "استخدام مؤقت لتنظيم الوقت",
-        "تتبع التقدم في الدراسة"
-      ]
-    },
-    "تدوين الملاحظات النشطة": {
-      score: 0,
-      description: "طريقة دراسة تعتمد على التلخيص والكتابة النشطة.",
-      tips: [
-        "تدوين النقاط الرئيسية أثناء الدراسة",
-        "استخدام الألوان والرسومات التوضيحية",
-        "مراجعة الملاحظات بشكل منتظم"
-      ]
-    }
-  };
+        <label class="question" for="focus-time">4. كم دقيقة تستطيع البقاء محافظًا على تركيزك أثناء الدراسة؟</label><br>
+        <input type="number" id="focus-time" name="focus-time" min="1" max="300"><br><br>
 
-  const handleAnswerChange = (questionId, value) => {
-    setAnswers(prev => ({
-      ...prev,
-      [questionId]: value
-    }));
-  };
+        <label class="question" for="time-management">5. ما هي الأدوات التي تستخدمها لإدارة وقتك؟</label><br>
+        <input type="checkbox" id="digital-calendars" name="time-management" value="تقاويم رقمية">
+        <label for="digital-calendars">تقاويم رقمية</label><br>
+        <input type="checkbox" id="task-apps" name="time-management" value="تطبيقات إدارة المهام">
+        <label for="task-apps">تطبيقات إدارة المهام</label><br>
+        <input type="checkbox" id="paper-schedules" name="time-management" value="جداول زمنية ورقية">
+        <label for="paper-schedules">جداول زمنية ورقية</label><br>
+        <input type="checkbox" id="no-tools" name="time-management" value="لا أستخدم أي أدوات">
+        <label for="no-tools">لا أستخدم أي أدوات</label><br><br>
 
-  const analyzeStudyMethod = () => {
-    // إعادة تعيين النقاط
-    Object.keys(studyMethods).forEach(method => {
-      studyMethods[method].score = 0;
-    });
+        <label class="question" for="subjects">6. المواد التي درستها</label><br>
+        <input type="checkbox" id="cis120" name="subjects" value="نظم معلومات حاسوبية (CIS 120)">
+        <label for="cis120">نظم معلومات حاسوبية (CIS 120)</label><br>
+        <input type="checkbox" id="stat101" name="subjects" value="احصاء (STAT 101)">
+        <label for="stat101">احصاء (STAT 101)</label><br>
+        <input type="checkbox" id="cs111" name="subjects" value="برمجه بلغة مختارة (CS 111)">
+        <label for="cs111">برمجه بلغة مختارة (CS 111)</label><br>
+        <input type="checkbox" id="da350" name="subjects" value="تعلم آلي (DA 350)">
+        <label for="da350">تعلم آلي (DA 350)</label><br>
+        <input type="checkbox" id="math101" name="subjects" value="تفاضل وتكامل (MATH 101)">
+        <label for="math101">تفاضل وتكامل (MATH 101)</label><br><br>
 
-    // تحليل الإجابات وتعيين النقاط
-    if (answers[1] === "الكتابة والقراءة") {
-      studyMethods["تدوين الملاحظات النشطة"].score += 2;
-    }
+        <div id="grades-section">
+            <label class="question" for="grade1">7. ما هي العلامة التي حصلت عليها في مساق نظم معلومات حاسوبية (CIS 120)</label><br>
+            <select id="grade1" name="grade1">
+                <option value="90-100">90-100</option>
+                <option value="80-89">80-89</option>
+                <option value="70-79">70-79</option>
+                <option value="60-69">60-69</option>
+                <option value="50-59">50-59</option>
+            </select><br>
 
-    if (answers[2] === "8:00 - 12:00") {
-      studyMethods["التعليم الذاتي"].score += 1;
-      studyMethods["تقنية البومودورو"].score += 1;
-    }
+            <label class="question" for="grade2">8. ما هي العلامة التي حصلت عليها في مساق احصاء (STAT 101)</label><br>
+            <select id="grade2" name="grade2">
+                <option value="90-100">90-100</option>
+                <option value="80-89">80-89</option>
+                <option value="70-79">70-79</option>
+                <option value="60-69">60-69</option>
+                <option value="50-59">50-59</option>
+            </select><br>
 
-    if (answers[3] === "منفردًا") {
-      studyMethods["التعليم الذاتي"].score += 2;
-    }
+            <label class="question" for="grade3">9. ما هي العلامة التي حصلت عليها في مساق برمجه بلغة مختارة (CS 111)</label><br>
+            <select id="grade3" name="grade3">
+                <option value="90-100">90-100</option>
+                <option value="80-89">80-89</option>
+                <option value="70-79">70-79</option>
+                <option value="60-69">60-69</option>
+                <option value="50-59">50-59</option>
+            </select><br>
 
-    if (Number(answers[4]) > 45) {
-      studyMethods["تقنية البومودورو"].score += 2;
-    }
+            <label class="question" for="grade4">10. ما هي العلامة التي حصلت عليها في مساق تعلم آلي (DA 350)</label><br>
+            <select id="grade4" name="grade4">
+                <option value="90-100">90-100</option>
+                <option value="80-89">80-89</option>
+                <option value="70-79">70-79</option>
+                <option value="60-69">60-69</option>
+                <option value="50-59">50-59</option>
 
-    if (answers[5] === "نعم") {
-      studyMethods["الممارسة المتقطعة"].score += 1;
-    }
+            </select><br>
+        </div><br>
 
-    if (answers[7] === "90-100") {
-      studyMethods["التعليم الذاتي"].score += 2;
-    }
+        <label for="current-gpa">11. معدلك الحالي</label><br>
+        <input type="number" id="current-gpa" name="current-gpa" min="1" max="100"><br><br>
 
-    if (Number(answers[8]) > 85) {
-      studyMethods["التعليم الذاتي"].score += 2;
-    }
+        <input type="submit" value="إرسال">
+    </form>
+</body>
+</html>
 
-    // اختيار أفضل طريقة
-    const bestMethod = Object.keys(studyMethods).reduce((a, b) => 
-      studyMethods[a].score > studyMethods[b].score ? a : b
-    );
 
-    setRecommendedMethod(bestMethod);
-  };
-
-  return (
-    <div className="container mx-auto p-4">
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle>اختيار أفضل طريقة دراسة</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {surveyQuestions.map(question => (
-            <div key={question.id} className="mb-4">
-              <p className="mb-2 font-bold">{question.text}</p>
-              {question.type === "select" && (
-                <Select onValueChange={(value) => handleAnswerChange(question.id, value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="اختر" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {question.options.map(option => (
-                      <SelectItem key={option} value={option}>
-                        {option}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
-              {question.type === "number" && (
-                <Input 
-                  type="number" 
-                  placeholder={question.placeholder}
-                  onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                />
-              )}
-            </div>
-          ))}
-          
-          <Button 
-            onClick={analyzeStudyMethod} 
-            className="w-full mt-4"
-          >
-            تحليل طريقة الدراسة
-          </Button>
-
-          {recommendedMethod && (
-            <div className="mt-4 p-3 bg-gray-100 rounded">
-              <h3 className="font-bold mb-2">الطريقة المناسبة لك:</h3>
-              <p>{recommendedMethod}</p>
-              <p className="mt-2">{studyMethods[recommendedMethod].description}</p>
-              
-              <h4 className="font-semibold mt-2">نصائح:</h4>
-              <ul className="list-disc pr-5">
-                {studyMethods[recommendedMethod].tips.map((tip, index) => (
-                  <li key={index}>{tip}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-export default StudyMethodRecommender;
+    
